@@ -1,26 +1,65 @@
+
+<?php
+    function print_title() {
+        if(isset($_GET['id'])) {
+            echo $_GET['id'];
+        } else {
+            echo "Welcome";
+        }
+    }
+?>
+
+<?php
+    function print_description() {
+        if (isset($_GET['id'])) {
+            $output = file_get_contents("data/".$_GET['id']);
+            echo $output;
+        } else {
+            echo "Hello, PHP";
+        }
+    }
+?>
+
+<?php
+    function print_list() {
+        $list = scandir('./data');
+        $i = 0;
+        while ($i < count($list)) {
+            if ($list[$i] != '.') {
+                if ($list[$i] != '..') {
+                    echo "<li><a href=\"index.php?id=$list[$i]\">$list[$i]</a></li>";  
+                }
+            }
+            $i = $i + 1;
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP</title>
+    <title>
+        <?php
+            print_title();
+        ?>
+        </title>
 </head>
 <body>
     <h1>WEB</h1>
     <ol>
-        <li><a href="index.php?id=HTML">HTML</a></li>
-        <li><a href="index.php?id=CSS">CSS</a></li>
-        <li><a href="index.php?id=JavaScript">JavaScript</a></li>
+        <?php
+            print_list();
+        ?>
     </ol>
     <h2>
         <?php
-            echo $_GET['id'];
+            print_title();
         ?>
     </h2>
     <?php
-        // echo read data/id file
-        
+        print_description();
     ?>
-    Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ex, sit id eos consectetur tenetur laboriosam amet quibusdam asperiores repellendus provident eaque ratione mollitia facere commodi earum nobis blanditiis magni?
 </body>
 </html>
